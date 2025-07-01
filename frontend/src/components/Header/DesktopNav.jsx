@@ -17,14 +17,24 @@ function DesktopNav({menuitems,Logo}) {
             }
         </ul>
         
-            <ul className='flex items-center gap-4'>
-                <li>
-                    <button className='text-black px-4 py-2 rounded-full font-body font-semibold bg-secondary1'>Log In</button>
-                </li>
-                <li>
-                    <button className='text-black px-4 py-2 rounded-full font-body font-semibold bg-secondary1'>Sign Up</button>
-                </li>
-            </ul>
+        <ul className='flex items-center gap-4'>
+  <li>
+    <Link
+      to="/login"
+      className="text-black px-4 py-2 rounded-full font-body font-semibold bg-secondary1"
+    >
+      Log In
+    </Link>
+  </li>
+  <li>
+    <Link
+      to="/signup"
+      className="text-black px-4 py-2 rounded-full font-body font-semibold bg-secondary1"
+    >
+      Sign Up
+    </Link>
+  </li>
+</ul>
 
     </div>
   )

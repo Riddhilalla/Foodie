@@ -6,7 +6,7 @@ export default {
   ],
   theme: {
     extend: {
-      colors:{
+      colors: {
         'background': '#FFFDF1',
         'secondary1': '#FFE353',
         'btnColor': '#FD5E27',
@@ -17,7 +17,16 @@ export default {
       fontFamily: {
         headings: ['"Chelsea Market"', 'system-ui'],
         body: ['"Roboto Mono"', 'monospace'],
-      }
+      },
+      animation: {
+        'fade-in': 'fadeIn 0.5s ease-in-out',
+      },
+      keyframes: {
+        fadeIn: {
+          '0%': { opacity: 0 },
+          '100%': { opacity: 1 },
+        },
+      },
     },
   },
   plugins: [],
