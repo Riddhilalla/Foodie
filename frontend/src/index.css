@@ -1,5 +1,17 @@
-@import url('https://fonts.googleapis.com/css2?family=Chelsea+Market&family=Roboto+Mono:wght@400;500&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Chelsea+Market&family=Roboto+Mono:wght@400;500&display=swap");
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.input {
+   @apply w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-orange-300;
+}
+
+.btn {
+   @apply px-4 py-2 bg-[#ff4d00] text-white rounded hover:bg-orange-600 transition;
+}
+
+.btn-secondary {
+   @apply px-4 py-2 bg-gray-300 text-gray-800 rounded hover:bg-gray-400 transition;
+}

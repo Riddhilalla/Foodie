@@ -36,7 +36,7 @@ function Login() {
     }
 
     try {
-      const url = "http://localhost:8080/auth/login";
+      const url = `${import.meta.env.VITE_SERVER_URL}/auth/login`;
       const response = await fetch(url, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -45,10 +45,10 @@ function Login() {
 
       if (response.ok) {
         const data = await response.json();
-        const { jwtToken, name } = data;
+        const { jwtToken, name, _id } = data;
         toast.success("Login successful!");
         localStorage.setItem("token", jwtToken);
-        localStorage.setItem("LoggedinUser", name);
+        localStorage.setItem("LoggedinUser", _id);
         setTimeout(() => navigate("/dashboard"), 1500);
       } else {
         const err = await response.json();

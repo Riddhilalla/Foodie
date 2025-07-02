@@ -1,15 +1,18 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import RecipeFormModal from "./RecipeFormModal"; 
+import RecipeCard from "../RecipeCard";
 
 function Dashboard() {
   const [dashboardData, setDashboardData] = useState(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const navigate = useNavigate();
 
   const fetchDashboard = async () => {
     try {
-      const url = "http://localhost:8080/dashboard";
+      const url = `${import.meta.env.VITE_SERVER_URL}/dashboard`;
       const response = await fetch(url, {
         headers: {
           Authorization: localStorage.getItem("token"),
@@ -57,7 +60,15 @@ const country = location?.country || "Unknown";
 
   return (
     <div className="min-h-screen bg-[#fdfbf6] font-body px-6 py-10 space-y-12">
-      
+      {/* Create Recipe Button */}
+      <div className="flex justify-end">
+        <button
+          onClick={() => setIsModalOpen(true)}
+          className="bg-[#ff4d00] hover:bg-orange-600 text-white font-semibold px-4 py-2 rounded shadow"
+        >
+          + Create Recipe
+        </button>
+      </div>
       <section className="bg-white rounded-lg shadow-lg p-6 flex flex-col md:flex-row items-center justify-between">
         <div className="flex items-center gap-6">
           <img
@@ -92,18 +103,8 @@ const country = location?.country || "Unknown";
         </h3>
         {uploadedRecipes?.length > 0 ? (
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-            {uploadedRecipes.map((r, idx) => (
-              <div
-                key={idx}
-                className="bg-white rounded-lg shadow-md overflow-hidden"
-              >
-                <img
-                  src={r.image}
-                  alt={r.title}
-                  className="h-48 w-full object-cover"
-                />
-                <div className="p-3 text-center font-medium">{r.title}</div>
-              </div>
+            {uploadedRecipes.map((r) => (
+              <RecipeCard key={r._id} recipe={r} />
             ))}
           </div>
         ) : (
@@ -118,24 +119,34 @@ const country = location?.country || "Unknown";
         </h3>
         {savedRecipes?.length > 0 ? (
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-            {savedRecipes.map((r, idx) => (
-              <div
-                key={idx}
-                className="bg-white rounded-lg shadow-md overflow-hidden"
-              >
-                <img
-                  src={r.image}
-                  alt={r.title}
-                  className="h-48 w-full object-cover"
-                />
-                <div className="p-3 text-center font-medium">{r.title}</div>
-              </div>
+            {savedRecipes.map((r) => (
+              <RecipeCard key={r._id} recipe={r} />
             ))}
           </div>
         ) : (
           <p className="text-sm text-gray-600">No saved recipes yet.</p>
         )}
       </section>
+
+      {/* Section 4: Liked Recipes */}
+      <section>
+        <h3 className="text-xl font-headings font-semibold mb-4 text-[#ff4d00]">
+          Liked Recipes
+        </h3>
+        {dashboardData?.likedRecipes?.length > 0 ? (
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+            {dashboardData.likedRecipes.map((r) => (
+              <RecipeCard key={r._id} recipe={r} />
+            ))}
+          </div>
+        ) : (
+          <p className="text-sm text-gray-600">No liked recipes yet.</p>
+        )}
+      </section>
+
+
+      {/* Modal for Recipe Form */}
+      <RecipeFormModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
 
       <ToastContainer />
     </div>

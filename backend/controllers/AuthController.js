@@ -56,7 +56,7 @@ const login = async (req, res) => {
             { expiresIn: '24h' }
         );
 
-        res.status(200).json({ message: "Login successful", success: true, jwtToken, email, name: user.name });
+        res.status(200).json({ message: "Login successful", success: true, jwtToken, email, name: user.name, _id: user._id, avatar: user.avatar });
     } catch (err) {
         console.error(err);
         res.status(500).json({ message: "Internal server error", success: false });
@@ -101,8 +101,21 @@ const googleLogin = async (req, res) => {
     }
 };
 
+const getMe = async (req, res) => {
+    try {
+        const user = await Usermodel.findById(req.user._id).select("name likedRecipes savedRecipes");
+        if (!user) return res.status(404).json({ message: "User not found" });
+        res.json(user);
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ message: "Server error" });
+    }
+};
+
+
 module.exports = {
     Signup,
     login,
-    googleLogin
+    googleLogin,
+    getMe,
 };

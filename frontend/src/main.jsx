@@ -16,6 +16,8 @@ import ErrorPage from "./components/ErrorPage.jsx";
 import Login from "./components/Authentication/Login";
 import Signup from "./components/Authentication/Signup";
 import Dashboard from "./components/Dashboard/Dashboard.jsx";
+import RecipePage from "./components/RecipePage.jsx";
+import RecipesPage from "./components/RecipesPage.jsx";
 
 // Wrapper for private routes
 function PrivateRoute({ element }) {
@@ -45,6 +47,14 @@ const router = createBrowserRouter([
         path: "/dashboard",
         element: <PrivateRoute element={<Dashboard />} />,
       },
+      {
+        path: "/recipe/:id",
+        element: <RecipePage />,
+      },
+      {
+        path: "/recipes",
+        element: <RecipesPage />
+      }
     ],
   },
 ]);

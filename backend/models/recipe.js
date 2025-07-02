@@ -13,6 +13,23 @@ const nutritionInfoSchema = new mongoose.Schema({
   fats: { type: String },
 });
 
+const commentSchema = new mongoose.Schema({
+  user: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User',
+    required: true
+  },
+  content: {
+    type: String,
+    required: true,
+    trim: true
+  },
+  datePosted: {
+    type: Date,
+    default: Date.now
+  },
+});
+
 const recipeSchema = new mongoose.Schema({
   name: {
     type: String,
@@ -59,8 +76,7 @@ const recipeSchema = new mongoose.Schema({
     type: String // base64 or image URL
   },
   comments: {
-    type: [mongoose.Schema.Types.ObjectId],
-    ref: 'Comment',
+    type: [commentSchema],
     default: []
   },
   datePosted: {
@@ -68,7 +84,8 @@ const recipeSchema = new mongoose.Schema({
     default: Date.now
   },
   author: {
-    type: String, // or mongoose.Schema.Types.ObjectId if linked to User model
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User',
     required: true
   },
   nutritionInfo: nutritionInfoSchema
